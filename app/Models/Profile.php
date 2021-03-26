@@ -18,4 +18,19 @@ class Profile extends Model
         'caption',
         'abstract',
     ];
+    public function scopeId($query,$value){
+        if ($value) {
+            return $query->where('id','=',$value);
+        }
+    }
+    public function scopeCaption($query,$value){
+        if ($value) {
+        return $query->where('caption','like',"%$value%") ;
+        }
+    }
+    public function scopeAbstract($query,$value){
+        if ($value) {
+            return $query->where('abstract','like',"%$value%");
+        }
+    }
 }

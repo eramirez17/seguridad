@@ -1,12 +1,23 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Opciones del Sistema') }}
-        </h2>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                        {{ __('Opciones del Sistema') }}
+                    </h2>    
+                </div>
+                <div class="col-sm text-right">
+                    <a href="{{route('options.create')}}" class="btn btn-success btn-sm text-right">
+                        Nuevo
+                    </a>
+                </div>
+            </div>
+        </div>
     </x-slot>
 
     <div class="py-12">
-    	@if(session('info'))
+        @if(session('info'))
             <div class="container">
                 <div class="col-md-8 col-md-offset-2 text-center">
                     <div class="alert alert-success">
@@ -33,11 +44,32 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
-                	<div class="container text-right">
-                        <a href="{{route('options.create')}}" class="btn btn-success btn-sm pull-right">
-                                Nuevo
-                        </a>    
-                    </div>
+                    <h6>Filtrar Busqueda</h6>
+                    {!! Form::open(['route' => ['options.index'],'method'=>'GET','class'=>'form-inline text-right']) !!}
+                        <div class="row">
+                            <div class="col input-group text-right">
+                                {{Form::text('id',null,['class'=>'form-control','placeholder'=>'ID'])}}
+                            </div>
+                            <div class="col input-group text-right">
+                                {{Form::text('caption',null,['class'=>'form-control','placeholder'=>'Título'])}}
+                            </div>
+                            <div class="col input-group text-right">
+                                {{Form::text('abstract',null,['class'=>'form-control','placeholder'=>'Descripción'])}}
+                            </div>
+                            <div class="col input-group text-right">
+                                {{Form::select('parent_id',[''=>'Opción Padre',$parentlist],null,['class'=>'form-control'])}}
+                            </div>
+                            <div class="col input-group text-right">
+                                {{Form::select('paginate',[''=>'Líneas','10'=>'10','20'=>'20','50'=>'50'],null,['class'=>'form-control'])}}
+                            </div>
+                            
+                            <div class="col input-group text-right">
+                                <button type="submit" class="btn btn-sm btn-primary">
+                                    <i class="fa fa-search" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    {!! Form::close() !!}
                     <hr/>
                     {{$options->render()}}
                     <table class="table table-success table-striped">

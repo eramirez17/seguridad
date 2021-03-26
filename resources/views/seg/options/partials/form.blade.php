@@ -33,7 +33,7 @@
 </div>
 <div class="form-group">
 	<strong>{{Form::label('parent_id', 'Padre')}}</strong>
-	{{Form::select('parent_id',$parentlist,null,['class'=>'form-control','id'=>'parent_id'])}}
+	{{Form::select('parent_id',[''=>'---',$parentlist],null,['class'=>'form-control','id'=>'parent_id'])}}
 </div>
 <hr/>
 <div class="form-group">

@@ -28,4 +28,24 @@ class Option extends Model
         'target',
         'level',
     ];
+    public function scopeId($query,$value){
+        if ($value) {
+            return $query->where('id','=',$value);
+        }
+    }
+    public function scopeCaption($query,$value){
+        if ($value) {
+        return $query->where('caption','like',"%$value%") ;
+        }
+    }
+    public function scopeAbstract($query,$value){
+        if ($value) {
+            return $query->where('abstract','like',"%$value%");
+        }
+    }
+    public function scopeParent_id($query,$value){
+        if ($value) {
+            return $query->where('parent_id','=',$value);
+        }
+    }
 }

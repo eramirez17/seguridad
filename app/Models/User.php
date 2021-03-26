@@ -46,4 +46,25 @@ class User extends Authenticatable
     public function profile(){
         return $this->belongsTo(Profile::class);
     }
+
+    public function scopeId($query,$value){
+        if ($value) {
+            return $query->where('id','=',$value);
+        }
+    }
+    public function scopeName($query,$value){
+        if ($value) {
+        return $query->where('name','like',"%$value%");
+        }
+    }
+    public function scopeEmail($query,$value){
+        if ($value) {
+            return $query->where('email','like',"%$value%");
+        }
+    }
+    public function scopeProfile_id($query,$value){
+        if ($value) {
+            return $query->where('profile_id','=',$value);
+        }
+    }
 }

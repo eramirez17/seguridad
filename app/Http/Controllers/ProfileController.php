@@ -20,9 +20,20 @@ class ProfileController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $profiles = Profile::orderBy('id','desc')->paginate(10);
+        
+        //obtener los datos del filtro de busqueda
+        $id = $request->get('id');
+        $caption = $request->get('caption');
+        $abstract = $request->get('abstract');
+        $paginate = ($request->get('paginate')) ? $request->get('paginate') : 10 ;
+
+        $profiles = Profile::id($id)
+                    ->caption($caption)
+                    ->abstract($abstract)
+                    ->orderBy('id','desc')
+                    ->paginate($paginate);
         return view('seg.profiles.index',compact('profiles'));
     }
 

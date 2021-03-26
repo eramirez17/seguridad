@@ -19,11 +19,26 @@ class OptionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $options = Option::orderBy('id','desc')->paginate(10);
-        $profiles = Profile::orderBy('caption','ASC')->get();
-        return view('seg.options.index',compact('options','profiles'));
+        $parentlist = Option::orderBy('caption','ASC')->pluck('caption','id');
+
+
+        //obtener los datos del filtro de busqueda
+        $id = $request->get('id');
+        $caption = $request->get('caption');
+        $abstract = $request->get('abstract');
+        $parent_id = $request->get('parent_id');
+        $paginate = ($request->get('paginate')) ? $request->get('paginate') : 10 ;
+
+
+        $options = Option::id($id)
+                    ->caption($caption)
+                    ->abstract($abstract)
+                    ->parent_id($parent_id)
+                    ->orderBy('id','desc')
+                    ->paginate($paginate);
+        return view('seg.options.index',compact('options','parentlist'));
     }
 
     /**

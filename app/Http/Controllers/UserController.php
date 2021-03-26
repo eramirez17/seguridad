@@ -19,11 +19,26 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         
-        $users = User::orderBy('id','desc')->paginate(10);
-        return view('seg.users.index',compact('users'));
+        $profiles = Profile::orderBy('caption','ASC')->pluck('caption','id');
+
+        //obtener los datos del filtro de busqueda
+        $id = $request->get('id');
+        $name = $request->get('name');
+        $email = $request->get('email');
+        $profile_id = $request->get('profile_id');
+        $paginate = ($request->get('paginate')) ? $request->get('paginate') : 10 ;
+
+
+        $users = User::id($id)
+                    ->name($name)
+                    ->email($email)
+                    ->profile_id($profile_id)
+                    ->orderBy('id','desc')
+                    ->paginate($paginate);
+        return view('seg.users.index',compact('users','profiles'));
     }
 
     /**
